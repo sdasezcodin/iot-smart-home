@@ -12,7 +12,7 @@ A comprehensive **console-based IoT Smart Home Dashboard** built with Java 21, f
 ## 🌟 Features
 
 ### Core Functionality
-- 🏠 **Smart Appliance Management** - Register, control, and monitor AC units, fans, and speakers
+- 🏠 **Smart Appliance Management** - Register, control, and monitor AC units, fans, and speakers.
 - 📊 **Real-time Dashboard** - Live sensor data streaming with background processing
 - 🌐 **Network Topology** - Visual representation of connected devices and network structure
 - 💾 **Data Persistence** - AWS DynamoDB integration for device state and sensor data
