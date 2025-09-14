@@ -389,7 +389,6 @@ public class SmartHomeService {
 
                             try {
                                 readingDAO.save(sensorData);
-                                System.out.println("✅ Saved to DB (10th read snapshot): " + saveReadingMsg);
                             } catch (Exception e) {
                                 System.err.println("⚠️ Failed to save sensor data: " + e.getMessage());
                             }
