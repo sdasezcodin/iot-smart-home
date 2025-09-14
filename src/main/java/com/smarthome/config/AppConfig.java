@@ -11,7 +11,7 @@ import com.smarthome.view.ConsoleMenu;
 
 /**
  * Configuration class for the Smart Home application.
- * This class uses the Singleton pattern to ensure only one instance
+ * This class uses the Singleton pattern to ensure only one instance.
  * of the application's core components is created. It also handles
  * the initialization and graceful shutdown of the entire system.
  */
