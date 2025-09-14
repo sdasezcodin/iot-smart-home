@@ -54,14 +54,24 @@ public class SensorDataDB implements SensorDataDAO<SensorData> {
             try {
                 client.createTable(CreateTableRequest.builder()
                         .tableName(TABLE_NAME)
-                        .attributeDefinitions(AttributeDefinition.builder()
-                                .attributeName("id")
-                                .attributeType(ScalarAttributeType.S)
-                                .build())
-                        .keySchema(KeySchemaElement.builder()
-                                .attributeName("id")
-                                .keyType(KeyType.HASH)
-                                .build())
+                        .attributeDefinitions(
+                                AttributeDefinition.builder()
+                                        .attributeName("deviceId") // Partition Key
+                                        .attributeType(ScalarAttributeType.S)
+                                        .build(),
+                                AttributeDefinition.builder()
+                                        .attributeName("id") // Sort Key
+                                        .attributeType(ScalarAttributeType.S)
+                                        .build())
+                        .keySchema(
+                                KeySchemaElement.builder()
+                                        .attributeName("deviceId")
+                                        .keyType(KeyType.HASH)
+                                        .build(),
+                                KeySchemaElement.builder()
+                                        .attributeName("id")
+                                        .keyType(KeyType.RANGE)
+                                        .build())
                         .billingMode(BillingMode.PAY_PER_REQUEST)
                         .build());
 
@@ -76,6 +86,7 @@ public class SensorDataDB implements SensorDataDAO<SensorData> {
 
         tableChecked = true;
     }
+
 
     /** {@inheritDoc} */
     @Override

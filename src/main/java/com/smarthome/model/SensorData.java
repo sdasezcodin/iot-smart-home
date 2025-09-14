@@ -2,6 +2,7 @@ package com.smarthome.model;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 
 /**
  * Represents a sensor reading from a device.
@@ -32,10 +33,12 @@ public class SensorData {
     }
 
     // -------- DynamoDB mapping --------
-    @DynamoDbPartitionKey
+
+    @DynamoDbSortKey
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
+    @DynamoDbPartitionKey
     public String getDeviceId() { return deviceId; }
     public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 

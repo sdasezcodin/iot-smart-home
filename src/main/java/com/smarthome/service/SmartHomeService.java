@@ -261,7 +261,7 @@ public class SmartHomeService {
                             );
 
                             SensorData sensorData = new SensorData.Builder()
-                                    .id(IdGenerator.generateID())
+                                    .id(IdGenerator.generateReadingDataID())
                                     .deviceId(saveAppliance.getId())
                                     .date(DateTimeUtil.getCurrentDate())
                                     .time(DateTimeUtil.getCurrentTime())
