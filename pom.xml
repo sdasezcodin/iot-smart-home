@@ -18,7 +18,6 @@
     </properties>
 
     <dependencies>
-
         <!-- AWS SDK for DynamoDB -->
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
@@ -58,7 +57,6 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -90,6 +88,30 @@
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
+            </plugin>
+
+            <!-- Shade Plugin to produce single runnable JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.smarthome.SmartHomeApp</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
