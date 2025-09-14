@@ -1,0 +1,38 @@
+[
+  {
+    "id": "AC01",
+    "name": "AC",
+    "brand": "Samsung",
+    "on": false,
+    "level": 24,
+    "powerUsage": 0,
+    "online": false
+  },
+  {
+    "id": "FAN01",
+    "name": "FAN",
+    "brand": "LG",
+    "on": false,
+    "level": 3,
+    "powerUsage": 0,
+    "online": false
+  },
+  {
+    "id": "LIGHT01",
+    "name": "LIGHT",
+    "brand": "Philips",
+    "on": false,
+    "level": 50,
+    "powerUsage": 0,
+    "online": false
+  },
+  {
+    "id": "SPK01",
+    "name": "SPEAKER",
+    "brand": "Philips",
+    "on": false,
+    "level": 30,
+    "powerUsage": 0,
+    "online": false
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "APPLIANCE": {
+    "AC": "com.smarthome.model.SmartACAppliance",
+    "HEATER": "com.smarthome.model.SmartRoomHeaterAppliance",
+    "FAN": "com.smarthome.model.SmartFanAppliance",
+    "LIGHT": "com.smarthome.model.SmartLightAppliance",
+    "SOUNDBAR": "com.smarthome.model.SmartSoundbarAppliance"
+  },
+  "SENSOR": {
+    "HEAT": "com.smarthome.model.HeatSensor",
+    "HUMIDITY": "com.smarthome.model.HumiditySensor",
+    "LIGHT": "com.smarthome.model.BrightnessSensor",
+    "NOISE": "com.smarthome.model.NoiseSensor"
+  }
+}
