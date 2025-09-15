@@ -68,9 +68,35 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Created version: $VERSION"
 
+      - name: Save Docker image as tarball
+        run: |
+          docker save iot-smarthome-dashboard:latest -o iot-smarthome-dashboard-v${{ steps.version.outputs.version }}.tar
+          ls -lh *.tar
+
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: sudipto-iot-smarthome-jar-v${{ steps.version.outputs.version }}
           path: target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
           retention-days: 90
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sudipto-iot-smarthome-docker-v${{ steps.version.outputs.version }}
+          path: iot-smarthome-dashboard-v${{ steps.version.outputs.version }}.tar
+          retention-days: 90
+
+      # Optional: Push to Docker Hub
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      # 
+      # - name: Push to Docker Hub
+      #   run: |
+      #     docker tag iot-smarthome-dashboard:latest ${{ secrets.DOCKER_USERNAME }}/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
+      #     docker tag iot-smarthome-dashboard:latest ${{ secrets.DOCKER_USERNAME }}/iot-smarthome-dashboard:latest
+      #     docker push ${{ secrets.DOCKER_USERNAME }}/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
+      #     docker push ${{ secrets.DOCKER_USERNAME }}/iot-smarthome-dashboard:latest
