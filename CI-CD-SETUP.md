@@ -2,7 +2,7 @@
 
 ## 🚀 Overview
 
-This document provides comprehensive information about setting up and troubleshooting the CI/CD pipeline for the IoT Smart Home Dashboard project using GitHub Actions and GitHub Codespaces.
+This document provides comprehensive information about setting up and troubleshooting the CI/CD pipeline for the IoT Smart Home Dashboard project using GitHub Actions.
 
 ## 📁 Pipeline Structure
 
@@ -10,10 +10,8 @@ This document provides comprehensive information about setting up and troublesho
 .github/
 └── workflows/
     └── ci-cd.yml              # Main CI/CD pipeline
-
-.devcontainer/
-├── devcontainer.json         # Codespaces configuration  
-└── setup.sh                  # Development environment setup script
+Dockerfile                     # Container build configuration
+pom.xml                        # Maven project configuration
 ```
 
 ## 🔧 GitHub Actions Pipeline
@@ -54,25 +52,32 @@ This document provides comprehensive information about setting up and troublesho
    - Docker image testing
    - Test result artifacts
 
-## 🌐 GitHub Codespaces Setup
+## 🐳 Docker Configuration
 
-### Development Environment
+### Dockerfile Features
 
-- **Base Image**: `mcr.microsoft.com/devcontainers/java:21-jdk`
-- **Features**: Docker, AWS CLI, GitHub CLI
-- **Extensions**: Java Pack, Maven, Docker tools
-- **Port Forwarding**: 5555 (App Server), 8000 (DynamoDB Local)
+- **Multi-stage Build**: Optimized build process with separate build and runtime stages
+- **Base Images**: 
+  - Build: `maven:3.9.5-eclipse-temurin-21`
+  - Runtime: `eclipse-temurin:21-jre-alpine`
+- **Security**: Non-root user execution
+- **Optimization**: Layer caching for dependencies
+- **Health Checks**: Built-in container health monitoring
 
-### Quick Start Commands
-
-After opening in Codespaces, use these aliases:
+### Local Docker Commands
 
 ```bash
-build              # mvn clean package
-test               # mvn test  
-run                # java -jar target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
-docker-build       # docker build -t iot-smarthome-dashboard .
-start-dynamodb     # Start DynamoDB Local on port 8000
+# Build the Docker image
+docker build -t iot-smarthome-dashboard:latest .
+
+# Run the container
+docker run -d -p 8080:8080 iot-smarthome-dashboard:latest
+
+# View container logs
+docker logs <container-id>
+
+# Stop the container
+docker stop <container-id>
 ```
 
 ## 🐛 Common Issues & Solutions
@@ -154,17 +159,20 @@ ERROR: failed to solve: process "/bin/sh -c mvn clean package" did not complete 
 ```
 
 **Solutions**:
-1. **Check Dockerfile**:
-   ```dockerfile
-   FROM maven:3.9.11-eclipse-temurin-21 AS build
-   WORKDIR /app
-   COPY pom.xml .
-   RUN mvn dependency:go-offline
-   COPY src ./src
-   RUN mvn clean package
+1. **Check Dockerfile Exists**:
+   - Ensure `Dockerfile` is present in the project root
+   - Verify the Dockerfile uses the correct base images
+
+2. **Local Testing**:
+   ```bash
+   # Test Docker build locally
+   docker build -t test-build .
+   
+   # Check if image was created
+   docker images | grep test-build
    ```
 
-2. **Verify Dependencies**:
+3. **Verify Dependencies**:
    - Ensure all dependencies are available
    - Check for network connectivity issues in build
 
@@ -191,25 +199,23 @@ Error: Artifact path is not valid
        retention-days: 5
    ```
 
-### Issue 6: Codespaces Environment Issues
+### Issue 6: JAR File Not Found
 
 **Symptoms**:
-- Java/Maven not found
-- Missing dependencies
-- Port forwarding not working
+```
+Error: Unable to access jarfile target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
+```
 
 **Solutions**:
-1. **Rebuild Container**: Use "Codespaces: Rebuild Container" command
-2. **Check Setup Script**: Ensure `.devcontainer/setup.sh` runs successfully
-3. **Manual Installation**:
+1. **Verify Maven Build**:
    ```bash
-   # Re-run setup manually if needed
-   bash .devcontainer/setup.sh
-   
-   # Check Java installation
-   java --version
-   mvn --version
+   mvn clean package
+   ls -la target/
    ```
+
+2. **Check Maven Shade Plugin**:
+   - Ensure the shade plugin is configured in `pom.xml`
+   - Verify the main class is correctly specified
 
 ## 🔍 Debugging Commands
 
@@ -227,42 +233,44 @@ curl -I http://localhost:8000/
 
 # Build Docker locally
 docker build -t test-build .
-docker run --rm test-build --help
+docker run --rm test-build
 ```
 
-### Environment Debugging
+### Local Environment Debugging
 
 ```bash
-# Check environment
-echo $JAVA_HOME
-echo $MAVEN_HOME
-echo $PATH
+# Check Java/Maven installation
+java --version
+mvn --version
 
-# Check AWS configuration  
-aws configure list
-aws dynamodb list-tables --endpoint-url http://localhost:8000
+# Check build artifacts
+ls -la target/
+find . -name "*.jar" -type f
 
-# Check ports
-netstat -tlnp | grep :8000
-netstat -tlnp | grep :5555
+# Test application locally
+java -jar target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
+
+# Check Docker installation
+docker --version
+docker images
 ```
 
 ## 📊 Pipeline Monitoring
 
 ### Success Metrics
-- ✅ Build completes in < 5 minutes
-- ✅ All 243 tests pass
+- ✅ Build completes in < 8 minutes
+- ✅ All tests pass
 - ✅ JAR artifact created successfully
 - ✅ Docker image builds without errors
-- ✅ No security vulnerabilities detected
+- ✅ Artifacts uploaded successfully
 
 ### Performance Benchmarks
 - **Checkout**: ~10 seconds
 - **Java Setup**: ~20 seconds  
-- **Dependency Cache**: ~30 seconds (first run), ~5 seconds (cached)
+- **DynamoDB Setup**: ~40 seconds
 - **Maven Build**: ~60-90 seconds
-- **Tests**: ~45-60 seconds
-- **Docker Build**: ~120-180 seconds
+- **Docker Build**: ~180-300 seconds (multi-stage)
+- **Artifact Upload**: ~10-20 seconds
 
 ## 🛠️ Advanced Configuration
 
@@ -327,10 +335,10 @@ jobs:
 ## 📚 Additional Resources
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [GitHub Codespaces Documentation](https://docs.github.com/en/codespaces)
 - [AWS DynamoDB Local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
 - [Maven Documentation](https://maven.apache.org/guides/)
 - [Docker Documentation](https://docs.docker.com/)
+- [Docker Multi-stage Builds](https://docs.docker.com/develop/dev-best-practices/)
 
 ## ❓ Need Help?
 
