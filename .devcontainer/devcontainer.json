@@ -1,5 +1,5 @@
 {
-  "name": "IoT Smart Home Dashboard",
+  "name": "IoT Smart Home Dashboard - Cloud Ready",
   "image": "mcr.microsoft.com/devcontainers/java:21",
   
   "features": {
@@ -13,21 +13,30 @@
         "vscjava.vscode-java-pack",
         "redhat.java",
         "ms-azuretools.vscode-docker"
-      ]
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "java.debug.settings.hotCodeReplace": "auto"
+      }
     }
   },
 
   "forwardPorts": [5555, 8000],
   "portsAttributes": {
     "5555": {
-      "label": "Smart Home App",
-      "protocol": "http"
+      "label": "🏠 Smart Home App",
+      "protocol": "http",
+      "visibility": "public",
+      "onAutoForward": "notify"
     },
     "8000": {
-      "label": "DynamoDB Local",
-      "protocol": "http"
+      "label": "🗄️ DynamoDB Local",
+      "protocol": "http",
+      "visibility": "public",
+      "onAutoForward": "silent"
     }
   },
 
-  "postCreateCommand": "bash .devcontainer/setup.sh"
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "remoteUser": "vscode"
 }
