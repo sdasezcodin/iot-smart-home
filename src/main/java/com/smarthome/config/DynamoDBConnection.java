@@ -28,7 +28,7 @@ public class DynamoDBConnection {
     private DynamoDBConnection() {}
 
     /**
-     * Provides a thread-safe way to get the singleton instance of the DynamoDbClient.
+     * Provides a thread-safe way to get the singleton instance of the DynamoDbClient
      * If the client has not been initialized yet, it creates a new one.
      *
      * @return The single instance of DynamoDbClient.
