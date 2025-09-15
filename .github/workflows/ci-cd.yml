@@ -58,9 +58,19 @@ jobs:
           docker create --name test-container iot-smarthome-dashboard:latest
           docker rm test-container
 
+      - name: Create version number
+        id: version
+        run: |
+          # Create semantic version: 1.01, 1.02, ..., 1.99, 2.01, 2.02, etc.
+          MAJOR=$(( (${{ github.run_number }} - 1) / 99 + 1 ))
+          MINOR=$(( (${{ github.run_number }} - 1) % 99 + 1 ))
+          VERSION="$MAJOR.$(printf '%02d' $MINOR)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Created version: $VERSION"
+
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dashboard-jar-v${{ github.run_number }}
+          name: sudipto-iot-smarthome-jar-v${{ steps.version.outputs.version }}
           path: target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
-          retention-days: 30
+          retention-days: 400
