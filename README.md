@@ -106,12 +106,17 @@ A comprehensive **console-based IoT Smart Home Dashboard** built with Java 21, f
 
 1. **Build Docker image**
    ```bash
-   docker build -t smart-home-dashboard .
+   docker build -t iot-smarthome-dashboard .
    ```
 
-2. **Run container**
+2. **Run container (console application)**
    ```bash
-   docker run -it smart-home-dashboard
+   docker run -it iot-smarthome-dashboard
+   ```
+
+3. **Run with network server port exposed (optional)**
+   ```bash
+   docker run -it -p 5555:5555 iot-smarthome-dashboard
    ```
 
 ## 📖 Usage Guide

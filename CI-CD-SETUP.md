@@ -70,8 +70,11 @@ pom.xml                        # Maven project configuration
 # Build the Docker image
 docker build -t iot-smarthome-dashboard:latest .
 
-# Run the container
-docker run -d -p 8080:8080 iot-smarthome-dashboard:latest
+# Run the container (console application - no port mapping needed)
+docker run -it iot-smarthome-dashboard:latest
+
+# Or run with network server port exposed
+docker run -it -p 5555:5555 iot-smarthome-dashboard:latest
 
 # View container logs
 docker logs <container-id>
