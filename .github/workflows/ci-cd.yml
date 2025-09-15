@@ -31,23 +31,23 @@ jobs:
       - name: Verify JAR file
         run: |
           if [ -f "target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar" ]; then
-            echo "✅ JAR file created successfully!"
+            echo "JAR file created successfully!"
             echo "Size: $(du -h target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar)"
           else
-            echo "❌ JAR file not found!"
+            echo "JAR file not found!"
             exit 1
           fi
 
       - name: Build Docker image
         run: |
-          echo "🐳 Building Docker image..."
+          echo "Building Docker image..."
           docker build -t iot-smarthome-dashboard:latest .
           docker build -t iot-smarthome-dashboard:v${{ github.run_number }} .
-          echo "✅ Docker images built successfully!"
+          echo "Docker images built successfully!"
 
       - name: Test Docker image
         run: |
-          echo "🧪 Testing Docker image..."
+          echo "Testing Docker image..."
           docker images | grep iot-smarthome-dashboard
           
           echo "Testing container startup..."
@@ -63,13 +63,13 @@ jobs:
       - name: Success summary
         run: |
           echo ""
-          echo "🎉 BUILD & DOCKERIZATION SUCCESSFUL!"
+          echo "BUILD & DOCKERIZATION SUCCESSFUL!"
           echo "===================================="
           echo ""
-          echo "✅ Java application built"
-          echo "✅ JAR file created"
-          echo "✅ Docker image built"
-          echo "✅ Container tested"
+          echo "Java application built"
+          echo "JAR file created"
+          echo "Docker image built"
+          echo "Container tested"
           echo ""
           echo "📦 Artifacts:"
           echo "  - JAR: dashboard-jar-v${{ github.run_number }}"
