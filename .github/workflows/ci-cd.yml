@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]   # Run when you push to main
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -14,7 +14,7 @@ jobs:
       dynamodb:
         image: amazon/dynamodb-local
         ports:
-          - 5555:8000   # Map DynamoDB Local inside CI runner
+          - 8000:8000   # Keep both host and container port 8000
         options: >-
           --health-cmd "curl --silent --fail http://localhost:8000/shell/ || exit 1"
           --health-interval 10s
