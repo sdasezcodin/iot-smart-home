@@ -20,12 +20,14 @@
   "forwardPorts": [5555, 8000],
   "portsAttributes": {
     "5555": {
-      "label": "Smart Home App"
+      "label": "Smart Home App",
+      "protocol": "http"
     },
     "8000": {
-      "label": "DynamoDB Local"
+      "label": "DynamoDB Local",
+      "protocol": "http"
     }
   },
 
-  "postCreateCommand": "mvn clean compile"
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }
