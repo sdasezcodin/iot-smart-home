@@ -430,11 +430,11 @@ Living Room AC
 
 #### 🎛️ Device Control Options
 
-| Operation | AC | Fan | Speaker |
-|-----------|-----|-----|----------|
-| **Toggle Power** | ⚙️ ON/OFF | ⚙️ ON/OFF | ⚙️ ON/OFF |
-| **Simulate** | 🌡️ 17-30°C | 💨 Speed 1-5 | 🔊 Volume 1-100% |
-| **Power Usage** | ⚡ 50-530W | ⚡ 15-55W | ⚡ 5-55W |
+| Operation        | AC          | Fan         | Speaker          |
+|------------------|-------------|-------------|------------------|
+| **Toggle Power** | ⚙️ ON/OFF   | ⚙️ ON/OFF   | ⚙️ ON/OFF        |
+| **Simulate**     | 🌡️ 17-30°C  | 💨 Speed 1-5 | 🔊 Volume 1-100% |
+| **Power Usage**  | ⚡ 50-530W   | ⚡ 15-55W    | ⚡ 5-55W          |
 
 #### ♾️ Remove Device
 - Select device from list
@@ -580,16 +580,16 @@ End date: 2024-09-15
 <details>
 <summary><b>📏 Test Suite Details</b></summary>
 
-| Test Class | Tests | Focus Area | Key Features |
-|------------|-------|------------|----------------|
-| `ApplianceTest` | 45+ | Model layer | Device operations, Observer pattern |
-| `ApplianceFactoryTest` | 30+ | Factory pattern | Brand-specific creation |
-| `CommandPatternTest` | 35+ | Command execution | Remote control, Undo/Redo |
-| `ExceptionTest` | 35+ | Error handling | Custom exception hierarchy |
-| `InputValidatorTest` | 40+ | Input validation | Range checking, Sanitization |
-| `DateTimeUtilTest` | 20+ | Utility functions | Date/time handling |
-| `IdGeneratorTest` | 25+ | ID generation | Uniqueness guarantees |
-| `SmartHomeIntegrationTest` | 15+ | End-to-end | Complete workflows |
+| Test Class                     | Tests | Focus Area        | Key Features                      |
+|--------------------------------|-------|-------------------|-----------------------------------|
+| `ApplianceTest`                | 45+   | Model layer       | Device operations, Observer pattern |
+| `ApplianceFactoryTest`         | 30+   | Factory pattern   | Brand-specific creation           |
+| `CommandPatternTest`           | 35+   | Command execution | Remote control, Undo/Redo        |
+| `ExceptionTest`                | 35+   | Error handling    | Custom exception hierarchy        |
+| `InputValidatorTest`           | 40+   | Input validation  | Range checking, Sanitization     |
+| `DateTimeUtilTest`             | 20+   | Utility functions | Date/time handling                |
+| `IdGeneratorTest`              | 25+   | ID generation     | Uniqueness guarantees             |
+| `SmartHomeIntegrationTest`     | 15+   | End-to-end        | Complete workflows                |
 
 </details>
 
@@ -878,13 +878,13 @@ IoT Smarthome Dashboard/
 
 ### 🎨 Design Pattern Distribution
 
-| Pattern | Files | Purpose |
-|---------|-------|----------|
-| **🏗️ Builder** | `model/` | Object construction |
-| **🏭 Factory** | `factory/` | Device creation |
-| **🕰️ Command** | `command/` | Operation encapsulation |
-| **👁️ Observer** | `observer/`, `view/` | Event notifications |
-| **🏢 Singleton** | `config/` | Configuration management |
+| Pattern               | Files                  | Purpose                     |
+|-----------------------|------------------------|-----------------------------|  
+| **🏗️ Builder**        | `model/`               | Object construction         |
+| **🏭 Factory**        | `factory/`             | Device creation             |
+| **🕰️ Command**        | `command/`             | Operation encapsulation     |
+| **👁️ Observer**       | `observer/`, `view/`   | Event notifications         |
+| **🏢 Singleton**      | `config/`              | Configuration management    |
 
 ## 🔧 Configuration
 
@@ -944,10 +944,10 @@ export AWS_DEFAULT_REGION="us-east-1"
 <details>
 <summary><b>📦 DynamoDB Tables</b></summary>
 
-| Table | Partition Key | Purpose | Auto-Created |
-|-------|---------------|---------|---------------|
-| `Appliances` | `id` (String) | Device information | ✅ Yes |
-| `SensorData` | `id` (String) | Historical readings | ✅ Yes |
+| Table         | Partition Key | Purpose             | Auto-Created |
+|---------------|---------------|---------------------|-------------|
+| `Appliances`  | `id` (String) | Device information  | ✅ Yes       |
+| `SensorData`  | `id` (String) | Historical readings | ✅ Yes       |
 
 **Local DynamoDB** (for development):
 ```bash
@@ -961,13 +961,13 @@ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 
 ### 📊 Environment Variables
 
-| Variable | Default | Description | Example |
-|----------|---------|-------------|---------|
-| `AWS_REGION` | `us-east-1` | DynamoDB region | `us-west-2` |
-| `SERVER_PORT` | `5555` | TCP server port | `8080` |
-| `STREAM_INTERVAL` | `3000` | Sensor interval (ms) | `5000` |
-| `LOG_LEVEL` | `INFO` | Logging level | `DEBUG` |
-| `DYNAMODB_ENDPOINT` | AWS Default | Custom endpoint | `http://localhost:8000` |
+| Variable             | Default      | Description           | Example                  |
+|----------------------|--------------|-----------------------|--------------------------|
+| `AWS_REGION`         | `us-east-1`  | DynamoDB region       | `us-west-2`              |
+| `SERVER_PORT`        | `5555`       | TCP server port       | `8080`                   |
+| `STREAM_INTERVAL`    | `3000`       | Sensor interval (ms)  | `5000`                   |
+| `LOG_LEVEL`          | `INFO`       | Logging level         | `DEBUG`                  |
+| `DYNAMODB_ENDPOINT`  | AWS Default  | Custom endpoint       | `http://localhost:8000`  |
 
 ## 📁 Project Structure
 
@@ -1106,12 +1106,12 @@ System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
 
 ### Common Issues & Solutions
 
-| Issue | Solution |
-|-------|----------|
-| Port already in use | Change `SERVER_PORT` in `AppConfig` |
-| AWS credentials not found | Configure using `aws configure` |
-| Database connection failed | Check AWS region and credentials |
-| Tests failing | Ensure Java 21 and proper Maven setup |
+| Issue                       | Solution                                |
+|-----------------------------|-----------------------------------------|
+| Port already in use         | Change `SERVER_PORT` in `AppConfig`     |
+| AWS credentials not found   | Configure using `aws configure`        |
+| Database connection failed  | Check AWS region and credentials        |
+| Tests failing               | Ensure Java 21 and proper Maven setup  |
 
 ## 🤝 Contributing
 
@@ -1263,12 +1263,12 @@ All contributors will be recognized in:
 
 <div align="center">
 
-| 🔍 **Issue Type** | 📍 **Where to Go** | ⏱️ **Response Time** |
-|------------|-------------|----------------|
-| 🐛 **Bug Reports** | [GitHub Issues](../../issues) | Within 24 hours |
-| ✨ **Feature Requests** | [GitHub Discussions](../../discussions) | Within 48 hours |
-| ❓ **General Questions** | [GitHub Discussions](../../discussions) | Within 72 hours |
-| 📚 **Documentation** | This README + [Wiki](../../wiki) | Always available |
+| 🔍 **Issue Type**      | 📍 **Where to Go**                        | ⏱️ **Response Time** |
+|------------------------|-------------------------------------------|----------------------|
+| 🐛 **Bug Reports**     | [GitHub Issues](../../issues)            | Within 24 hours      |
+| ✨ **Feature Requests** | [GitHub Discussions](../../discussions)  | Within 48 hours      |
+| ❓ **General Questions** | [GitHub Discussions](../../discussions)  | Within 72 hours      |
+| 📚 **Documentation**    | This README + [Wiki](../../wiki)         | Always available     |
 
 </div>
 
@@ -1331,14 +1331,14 @@ All contributors will be recognized in:
 
 <div align="center">
 
-| Operation | Target | Actual | Status |
-|-----------|--------|--------|---------|
-| **Device Registration** | < 100ms | ~45ms | ✅ |
-| **Command Execution** | < 50ms | ~25ms | ✅ |
-| **Sensor Processing** | < 10ms | ~3ms | ✅ |
-| **Network Topology** | < 200ms | ~150ms | ✅ |
-| **Database Operations** | < 500ms | ~200ms | ✅ |
-| **Memory Usage** | < 256MB | ~180MB | ✅ |
+| Operation               | Target   | Actual  | Status |
+|-------------------------|----------|---------|--------|
+| **Device Registration** | < 100ms  | ~45ms   | ✅     |
+| **Command Execution**   | < 50ms   | ~25ms   | ✅     |
+| **Sensor Processing**   | < 10ms   | ~3ms    | ✅     |
+| **Network Topology**    | < 200ms  | ~150ms  | ✅     |
+| **Database Operations** | < 500ms  | ~200ms  | ✅     |
+| **Memory Usage**        | < 256MB  | ~180MB  | ✅     |
 
 </div>
 
