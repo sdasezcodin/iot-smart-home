@@ -49,7 +49,7 @@ jobs:
         run: docker build -t iot-smarthome-dashboard .
 
       - name: Save Docker image as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: iot-app-image
           path: ./target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
