@@ -1,548 +1,276 @@
-# 🏠 IoT Smart Home Dashboard
+# IoT Smart Home Dashboard
 
-<div align="center">
+A comprehensive console-based application for managing IoT smart home devices. This project demonstrates enterprise-level Java development practices, including design patterns, clean architecture, and modern testing approaches.
 
-![IoT Dashboard](https://img.shields.io/badge/IoT-Smart%20Home%20Dashboard-blue?style=for-the-badge&logo=smarthome)
+![Java](https://img.shields.io/badge/Java-21-orange) ![Maven](https://img.shields.io/badge/Maven-3.9-blue) ![AWS](https://img.shields.io/badge/AWS-DynamoDB-orange) ![Docker](https://img.shields.io/badge/Docker-supported-blue) ![Tests](https://img.shields.io/badge/Tests-240%2B-green)
 
-[![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.java.net/projects/jdk/21/)
-[![Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)](https://maven.apache.org/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![AWS DynamoDB](https://img.shields.io/badge/Amazon%20DynamoDB-4053D6?style=for-the-badge&logo=Amazon%20DynamoDB&logoColor=white)](https://aws.amazon.com/dynamodb/)
-[![JUnit](https://img.shields.io/badge/JUnit%205-25A162?style=for-the-badge&logo=junit5&logoColor=white)](#testing)
-[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](.github/workflows/ci-cd.yml)
+## What's Inside
 
-**🎯 A Modern Console-Based IoT Management System with Enterprise Architecture**
+This project simulates a smart home management system where you can:
 
-*Built with Java 21 • MVC Architecture • 5 Design Patterns • 240+ Tests • CI/CD Ready*
+- **Manage Devices**: Register and control smart home appliances (AC, fans, speakers)
+- **Real-time Monitoring**: Stream live sensor data from your devices
+- **Network Management**: Visualize and manage device connectivity
+- **Data Persistence**: Store device data and sensor readings in AWS DynamoDB
+- **Historical Analytics**: Query and analyze historical sensor data
 
-</div>
+## Key Features
 
----
+### Core Functionality
+- Device registration and management (AC units, fans, speakers)
+- Real-time sensor data streaming every 3 seconds
+- Network topology visualization
+- Device control commands (power on/off, simulate operations)
+- Historical data queries with date ranges
 
-## 📋 Table of Contents
-- [🌟 Project Overview](#-project-overview)
-- [🚀 Key Features](#-key-features)
-- [🏗️ Architecture & Design](#️-architecture--design)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [⚡ Quick Start](#-quick-start)
-- [📱 Usage Guide](#-usage-guide)
-- [🧪 Testing](#-testing)
-- [🐳 Docker Support](#-docker-support)
-- [📊 Project Structure](#-project-structure)
-- [🔧 Configuration](#-configuration)
-- [📈 Performance](#-performance)
-- [🤝 Contributing](#-contributing)
-- [📄 Documentation](#-documentation)
+### Technical Highlights
+- **Architecture**: Clean MVC pattern with proper separation of concerns
+- **Design Patterns**: Builder, Factory, Command, Observer, and Singleton patterns
+- **Modern Java**: Built with Java 21 features
+- **Cloud Integration**: AWS DynamoDB for data storage
+- **Testing**: Comprehensive test suite with 240+ tests
+- **Containerization**: Docker support for easy deployment
 
----
+## System Architecture
 
-## 🌟 Project Overview
-
-The **IoT Smart Home Dashboard** is a comprehensive console-based application that demonstrates enterprise-level software engineering practices. Built with Java 21, it showcases modern development techniques, robust architecture, and production-ready code quality.
-
-### 🎯 What Makes This Project Special?
-
-- **🏗️ Enterprise Architecture**: MVC pattern with clean separation of concerns
-- **🎨 Design Patterns**: Implementation of 5 classic GoF patterns
-- **⚡ Modern Java**: Leverages Java 21 features like pattern matching and records
-- **🧪 Comprehensive Testing**: 240+ unit and integration tests with 85%+ coverage
-- **🌐 Cloud Integration**: AWS DynamoDB for scalable data persistence
-- **🚀 DevOps Ready**: Complete CI/CD pipeline with GitHub Actions
-- **📊 Real-time Monitoring**: Live sensor data streaming and device management
-
-### 💡 Project Highlights
-
-| Feature | Implementation | Benefit |
-|---------|---------------|---------|
-| **MVC Architecture** | Clean layer separation | Maintainable and scalable code |
-| **Design Patterns** | 5 GoF patterns implemented | Flexible and extensible design |
-| **Thread Safety** | Concurrent operations | Production-ready performance |
-| **AWS Integration** | DynamoDB database | Cloud-native data persistence |
-| **Docker Support** | Multi-stage builds | Easy deployment and scalability |
-| **Comprehensive Testing** | 240+ tests, 85% coverage | High code quality and reliability |
-
-## 🚀 Key Features
-
-### 🏠 Smart Home Management
-
-<div align="center">
+The application follows a clean MVC (Model-View-Controller) architecture with proper separation of concerns:
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                  🏠 SMART HOME DASHBOARD                   │
-├─────────────────────────────────────────────────────┤
-│  🌡️  Living Room AC: 24°C, Power: 530W            │
-│  💨  Bedroom Fan: Speed 3, Power: 35W             │
-│  🔊  Kitchen Speaker: Volume 45%, Power: 27W      │
-│                                                 │
-│  🟢 3 Devices Online  🔴 1 Device Offline           │
-└─────────────────────────────────────────────────────┘
+View Layer (Console Interface)
+       ↓
+Controller Layer (Request Handling)
+       ↓
+Service Layer (Business Logic)
+       ↓
+Model Layer (Data Objects)
+       ↓
+Data Access Layer (Database Operations)
 ```
 
-</div>
+### Design Patterns Used
 
-### 🎆 Core Features
+This project implements five classic design patterns:
 
-| 📦 Feature | 📝 Description | ✨ Highlight |
-|---------|-------------|----------|
-| **📱 Device Management** | Register, control, and monitor smart devices | Support for AC, Fan, Speaker devices |
-| **📏 Real-time Dashboard** | Live sensor data with 3-second intervals | Background streaming with observers |
-| **🌐 Network Topology** | Visual network structure and device status | TCP client-server simulation |
-| **📋 Data Persistence** | AWS DynamoDB cloud storage | Scalable NoSQL database integration |
-| **🎛️ Device Control** | Power control and operation simulation | Command pattern implementation |
-| **📊 Analytics** | Historical data and power consumption tracking | Date-range queries and reporting |
+1. **Builder Pattern** - For constructing complex Appliance and SensorData objects
+2. **Factory Pattern** - For creating brand-specific devices (Haier, LG, Sony)
+3. **Command Pattern** - For encapsulating device operations (Toggle, Simulate)
+4. **Observer Pattern** - For real-time dashboard updates
+5. **Singleton Pattern** - For application configuration management
 
-### 🔧 Technical Excellence
+### Technology Stack
 
-<details>
-<summary><b>🎨 Design Patterns Implemented (5 Patterns)</b></summary>
+- **Java 21** - Latest LTS with modern language features
+- **Maven** - Build automation and dependency management
+- **AWS DynamoDB** - NoSQL cloud database for data persistence
+- **JUnit 5** - Modern testing framework
+- **Docker** - Containerization support
+- **Jackson** - JSON processing
 
-- **🏗️ Builder Pattern**: Complex object creation (Appliance, SensorData)
-- **🏭 Factory Pattern**: Brand-specific device creation (Haier, LG, Sony)
-- **🕰️ Command Pattern**: Device operations encapsulation (Toggle, Simulate)
-- **👁️ Observer Pattern**: Real-time state notifications (Dashboard updates)
-- **🏢 Singleton Pattern**: Configuration management (AppConfig)
+## Getting Started
 
-</details>
+### Prerequisites
 
-<details>
-<summary><b>⚡ Modern Java 21 Features</b></summary>
+Make sure you have these installed:
 
-- **Pattern Matching**: Enhanced switch expressions
-- **Record Classes**: Immutable data structures
-- **Text Blocks**: Improved string handling
-- **Sealed Classes**: Controlled inheritance
-- **Enhanced NullPointerException**: Better debugging
+- **Java 21 or higher** - [Download from Oracle](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) or [OpenJDK](https://openjdk.org/projects/jdk/21/)
+- **Maven 3.6+** - [Installation guide](https://maven.apache.org/install.html)
+- **AWS Account** (optional) - For cloud database features
+- **Docker** (optional) - For containerized deployment
 
-</details>
+### Installation
 
-<details>
-<summary><b>🧵 Concurrent Programming</b></summary>
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd "IoT Smarthome Dashboard"
+   ```
 
-- **Thread-Safe Collections**: CopyOnWriteArrayList, ConcurrentHashMap
-- **Synchronized Methods**: Device state management
-- **Background Processing**: Sensor data streaming
-- **Atomic Operations**: Thread-safe counters and flags
+2. **Verify Java version**
+   ```bash
+   java --version
+   # Should show Java 21 or higher
+   ```
 
-</details>
+3. **Build the project**
+   ```bash
+   mvn clean compile
+   ```
 
-## 🏗️ Architecture & Design
+4. **Run tests** (optional)
+   ```bash
+   mvn test
+   ```
 
-### 🎯 System Architecture (MVC Pattern)
+5. **Create executable JAR**
+   ```bash
+   mvn clean package
+   ```
 
-<div align="center">
+6. **Run the application**
+   ```bash
+   java -jar target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
+   ```
 
-```
-┌────────────────────────────────────────────────────────────┐
-│                        🏠 IoT Smart Home Dashboard                        │
-├────────────────────────────────────────────────────────────┤
-│ 🖥️ VIEW LAYER                                📱 User Interface      │
-│ ┌────────────────────┐  ┌─────────────────────────┐ │
-│ │    ConsoleMenu     │  │      DeviceObserver     │ │
-│ │  Menu Navigation   │  │   Dashboard Updates    │ │
-│ └────────────────────┘  └─────────────────────────┘ │
-├────────────────────────────────────────────────────────────┤
-│ 🎛️ CONTROLLER LAYER                        📲 Request Processing  │
-│ ┌──────────────────────────────────────────────────────┐ │
-│ │                 SmartHomeController                 │ │
-│ │           Input Handling & Orchestration           │ │
-│ └──────────────────────────────────────────────────────┘ │
-├────────────────────────────────────────────────────────────┤
-│ ⚙️ SERVICE LAYER                               📁 Business Logic     │
-│ ┌──────────────────────────────────────────────────────┐ │
-│ │                  SmartHomeService                  │ │
-│ │     Device Management • Network • Sensor Streaming   │ │
-│ └──────────────────────────────────────────────────────┘ │
-├────────────────────────────────────────────────────────────┤
-│ 📦 MODEL LAYER                                📋 Data Models       │
-│ ┌───────────────┐ ┌────────────────┐ ┌───────────────┐ │
-│ │   Appliance   │ │  SensorData   │ │ Design Patterns │ │
-│ │ Smart Device  │ │ Data Reading │ │  Command,etc.  │ │
-│ └───────────────┘ └────────────────┘ └───────────────┘ │
-├────────────────────────────────────────────────────────────┤
-│ 📡 DATA ACCESS LAYER                         💾 Database Layer   │
-│ ┌─────────────────────┐ ┌───────────────────────────┐ │
-│ │    ApplianceDB     │ │      SensorDataDB     │ │
-│ │   Device DAO      │ │     Sensor DAO       │ │
-│ └─────────────────────┘ └───────────────────────────┘ │
-├────────────────────────────────────────────────────────────┤
-│ 🌐 INFRASTRUCTURE LAYER                      🔌 External Systems  │
-│ ┌───────────┐ ┌───────────┐ ┌────────────────────┐ │
-│ │ TCP Client │ │ TCP Server │ │   AWS DynamoDB    │ │
-│ │  Network   │ │  Network   │ │    Database      │ │
-│ └───────────┘ └───────────┘ └────────────────────┘ │
-└────────────────────────────────────────────────────────────┘
-```
+### Docker Setup (Alternative)
 
-</div>
-
-### 🎨 Design Patterns Implementation
-
-| Pattern | Implementation | Purpose | Benefits |
-|---------|----------------|---------|----------|
-| 🏗️ **Builder** | `Appliance.Builder`, `SensorData.Builder` | Complex object creation | Flexible construction, Immutability |
-| 🏭 **Factory** | `HaierFactory`, `LGFactory`, `SonyFactory` | Brand-specific device creation | Extensibility, Polymorphism |
-| 🕰️ **Command** | `Toggle`, `Simulate`, `Remote` | Device operation encapsulation | Undo/Redo capability, Loose coupling |
-| 👁️ **Observer** | `DeviceObserver`, `Subject` | Real-time state notifications | Event-driven architecture |
-| 🏢 **Singleton** | `AppConfig` | Single configuration instance | Global access point |
-
-## 🛠️ Tech Stack
-
-### 🔧 Core Technologies
-
-<table>
-<tr>
-<td>
-
-**🎆 Language & Build**
-- ☕ **Java 21** - Latest LTS with modern features
-- 🛐 **Maven 3.9+** - Dependency management & build
-- 📦 **Maven Shade Plugin** - Executable JAR creation
-
-</td>
-<td>
-
-**📏 Database & Cloud**
-- 🌍 **AWS DynamoDB** - NoSQL cloud database
-- 🔍 **AWS SDK 2.29** - Latest AWS integration
-- 📡 **DynamoDB Enhanced Client** - ORM capabilities
-
-</td>
-</tr>
-<tr>
-<td>
-
-**🧪 Testing & Quality**
-- ✅ **JUnit 5.10** - Modern testing framework
-- 📏 **Maven Surefire** - Test execution
-- 📈 **240+ Tests** - Comprehensive coverage
-
-</td>
-<td>
-
-**🚀 DevOps & Deployment**
-- 🐳 **Docker** - Containerization
-- 🔄 **GitHub Actions** - CI/CD pipeline
-- ⚙️ **Multi-stage Builds** - Optimized images
-
-</td>
-</tr>
-</table>
-
-### 📚 Key Dependencies
-
-```xml
-<!-- Core Dependencies -->
-<dependency>
-    <groupId>software.amazon.awssdk</groupId>
-    <artifactId>dynamodb-enhanced</artifactId>
-    <version>2.29.23</version>
-</dependency>
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.20.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter-engine</artifactId>
-    <version>5.10.0</version>
-</dependency>
-```
-
-## ⚡ Quick Start
-
-### 📋 Prerequisites
-
-<table>
-<tr>
-<td width="50%">
-
-**📦 Required**
-- ☕ **Java 21+** - [Download here](https://adoptium.net/)
-- 🛐 **Maven 3.6+** - [Download here](https://maven.apache.org/download.cgi)
-- 💻 **Command Line** - Terminal or PowerShell
-
-</td>
-<td width="50%">
-
-**🎆 Optional**
-- 🐳 **Docker** - For containerization
-- 🌍 **AWS Account** - For cloud DynamoDB
-- ⚙️ **IDE** - IntelliJ IDEA, VS Code, Eclipse
-
-</td>
-</tr>
-</table>
-
-### 🛠️ Installation & Setup
-
-<details>
-<summary><b>🎆 Method 1: Standard Installation (Recommended)</b></summary>
+If you prefer using Docker:
 
 ```bash
-# 1. Clone the repository
-git clone <your-repository-url>
-cd "IoT Smarthome Dashboard"
+# Build the image
+docker build -t iot-dashboard .
 
-# 2. Verify Java installation
-java --version
-# Should show Java 21 or higher
+# Run the container
+docker run -it iot-dashboard
+```
 
-# 3. Build the project
-mvn clean compile
+### AWS DynamoDB Setup (Optional)
 
-# 4. Run comprehensive tests (optional)
+For cloud database functionality:
+
+1. **Configure AWS credentials**
+   ```bash
+   aws configure
+   ```
+   Enter your AWS Access Key, Secret Key, and preferred region (e.g., us-east-1)
+
+2. **Tables will be created automatically** when you first run the application
+
+## How to Use
+
+The application provides a console-based menu system:
+
+### Main Menu Options
+
+```
+==========================================
+       SMART HOME DASHBOARD
+==========================================
+[1] Device Management
+[2] Network Management  
+[3] Sensor Readings
+[4] Live Dashboard
+[0] Exit
+==========================================
+```
+
+### Available Features
+
+**1. Device Management**
+- Register new devices (AC, Fan, Speaker)
+- Choose from different brands (Haier, LG, Sony)
+- Control device power (on/off)
+- Simulate device operations
+- Remove devices from the system
+
+**2. Network Management**
+- View network topology
+- See device connection status
+- Connect/disconnect devices
+- Monitor network health
+
+**3. Sensor Data**
+- Query historical sensor readings
+- Filter by device or date range
+- View power consumption data
+- Export data for analysis
+
+**4. Live Dashboard**
+- Real-time sensor data streaming
+- Updates every 3 seconds
+- Live power consumption monitoring
+- Device status indicators
+## Testing
+
+The project includes a comprehensive test suite with 240+ tests:
+
+```bash
+# Run all tests
 mvn test
 
-# 5. Create executable JAR
-mvn clean package
+# Run specific test class
+mvn test -Dtest=ApplianceTest
 
-# 6. Run the application
-java -jar target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
+# Run tests with coverage report
+mvn test jacoco:report
 ```
 
-</details>
+### Test Coverage
+- **Unit Tests**: 190+ tests covering individual components
+- **Integration Tests**: 40+ tests for multi-component interactions
+- **Edge Cases**: 30+ tests for boundary conditions
+- **Thread Safety**: 25+ tests for concurrent operations
 
-<details>
-<summary><b>🐳 Method 2: Docker Installation</b></summary>
-
-```bash
-# 1. Build Docker image
-docker build -t iot-dashboard:latest .
-
-# 2. Run container (interactive mode)
-docker run -it iot-dashboard:latest
-
-# 3. Run with network port exposed (optional)
-docker run -it -p 5555:5555 iot-dashboard:latest
-
-# 4. Run in background (detached mode)
-docker run -d --name iot-dashboard iot-dashboard:latest
-```
-
-</details>
-
-<details>
-<summary><b>🌍 Method 3: AWS DynamoDB Setup (Optional)</b></summary>
-
-```bash
-# 1. Install AWS CLI
-# Download from: https://aws.amazon.com/cli/
-
-# 2. Configure AWS credentials
-aws configure
-# Enter your Access Key, Secret Key, Region (e.g., us-east-1)
-
-# 3. Create DynamoDB tables (optional - auto-created)
-aws dynamodb create-table \
-    --table-name Appliances \
-    --attribute-definitions AttributeName=id,AttributeType=S \
-    --key-schema AttributeName=id,KeyType=HASH \
-    --billing-mode PAY_PER_REQUEST
-```
-
-</details>
-
-### 🏁 First Run Experience
-
-When you start the application for the first time:
-
-1. **Welcome Screen** - ASCII art and loading animation
-2. **System Initialization** - Configuration setup
-3. **Main Menu** - Navigate through options
-4. **Auto-setup** - Default devices and sample data
+## Project Structure
 
 ```
-   _____                      _     _    _                      
-  / ____|                    | |   | |  | |                     
- | (___  _ __ ___   __ _ _ __| |_  | |__| | ___  _ __ ___   ___ 
-  \___ \| '_ ` _ \ / _` | '__| __| |  __  |/ _ \| '_ ` _ \ / _ \
-  ____) | | | | | | (_| | |  | |_  | |  | | (_) | | | | | |  __/
- |_____/|_| |_| |_|\__,_|_|   \__| |_|  |_|\___/|_| |_| |_|\___|
-                                                                
-               IoT Dashboard & Control System                   
-
-🔌 Connecting to smart devices...
-📋 Loading device registry...
-✅ System ready!
+src/
+├── main/java/com/smarthome/
+│   ├── SmartHomeApp.java           # Main application entry point
+│   ├── command/                    # Command pattern implementations
+│   ├── config/                     # Configuration management
+│   ├── controller/                 # MVC controllers
+│   ├── db/                         # Database access objects
+│   ├── exception/                  # Custom exceptions
+│   ├── factory/                    # Factory pattern implementations
+│   ├── model/                      # Data models
+│   ├── network/                    # Network layer
+│   ├── observer/                   # Observer pattern
+│   ├── service/                    # Business logic
+│   ├── util/                       # Utility classes
+│   └── view/                       # User interface
+├── main/resources/
+│   ├── devices.json                # Sample device data
+│   └── device_types.json           # Device type mappings
+└── test/java/com/smarthome/         # Test classes
 ```
 
-## 📱 Usage Guide
+## Configuration
 
-### 🏠 Main Menu Navigation
+### Environment Variables
 
-<div align="center">
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AWS_REGION` | `us-east-1` | AWS region for DynamoDB |
+| `SERVER_PORT` | `5555` | TCP server port |
+| `STREAM_INTERVAL` | `3000` | Sensor data interval (ms) |
 
-```
-╔════════════════════════════════════════╗
-║        🏠 SMART HOME DASHBOARD 🏠       ║
-╠════════════════════════════════════════╣
-║  [1] 📱 Device Management               ║
-║  [2] 🌐 Network Management              ║
-║  [3] 📊 Sensor Readings                 ║
-║  [4] 📲 Live Dashboard                  ║
-║  [0] 🚗 Exit                            ║
-╙════════════════════════════════════════╜
-```
+### Application Properties
 
-</div>
+Key configuration options in `application.properties`:
 
-### 🛠️ Feature Walkthrough
+- Network settings (server port, timeout)
+- Data streaming intervals
+- Database connection parameters
+- Logging levels
 
-<details>
-<summary><b>📱 Device Management</b></summary>
+## Contributing
 
-#### ➕ Register a New Device
+Contributions are welcome! Please follow these steps:
 
-<table>
-<tr><td width="33%">
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass (`mvn test`)
+6. Commit your changes (`git commit -am 'Add new feature'`)
+7. Push to the branch (`git push origin feature/new-feature`)
+8. Create a Pull Request
 
-**1️⃣ Select Device Type**
-```
-[1] AC (Air Conditioner)
-[2] FAN 
-[3] SPEAKER
-```
+## License
 
-</td><td width="33%">
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-**2️⃣ Choose Brand**
-```
-[1] Haier
-[2] LG  
-[3] Sony
-```
+## Support
 
-</td><td width="33%">
+If you encounter any issues or have questions:
 
-**3️⃣ Enter Name**
-```
-Device name: 
-Living Room AC
-✅ Device registered!
-```
+- Check the [documentation](Documentation/) folder
+- Open an issue on GitHub
+- Review the test cases for usage examples
 
-</td></tr>
-</table>
+---
 
-#### 🎛️ Device Control Options
-
-| Operation        | AC          | Fan         | Speaker          |
-|------------------|-------------|-------------|------------------|
-| **Toggle Power** | ⚙️ ON/OFF   | ⚙️ ON/OFF   | ⚙️ ON/OFF        |
-| **Simulate**     | 🌡️ 17-30°C  | 💨 Speed 1-5 | 🔊 Volume 1-100% |
-| **Power Usage**  | ⚡ 50-530W   | ⚡ 15-55W    | ⚡ 5-55W          |
-
-#### ♾️ Remove Device
-- Select device from list
-- Confirm deletion
-- ✅ Device removed from system
-
-</details>
-
-<details>
-<summary><b>🌐 Network Management</b></summary>
-
-#### 🔌 Network Topology View
-```
-🌐 CURRENT NETWORK TOPOLOGY:
-
-💻 Server (localhost:5555)
-├── 🌡️ Living Room AC (🟢 Online)
-├── 💨 Bedroom Fan (🟢 Online)
-└── 🔊 Kitchen Speaker (🔴 Offline)
-
-🟢 3 Connected  🔴 1 Disconnected
-```
-
-#### 🔌 Device Connection Management
-- **Connect Device**: Bring device online
-- **Disconnect Device**: Take device offline
-- **Auto-reconnect**: Failed devices retry connection
-- **Status Monitor**: Real-time connection status
-
-</details>
-
-<details>
-<summary><b>📊 Sensor Data & Analytics</b></summary>
-
-#### 📈 Historical Data Queries
-
-<table>
-<tr><td width="50%">
-
-**📊 By Device**
-```
-Select device: Living Room AC
-Limit: 5 readings
-
-📅 2024-09-15 12:30:45
-➔ AC: 24°C, Power: 530W
-
-📅 2024-09-15 12:30:42
-➔ AC: 25°C, Power: 450W
-```
-
-</td><td width="50%">
-
-**📅 By Date Range**
-```
-Start date: 2024-09-14
-End date: 2024-09-15
-
-📈 Found 156 readings
-📊 Avg power: 342W
-⚡ Peak usage: 530W
-```
-
-</td></tr>
-</table>
-
-#### 🔴 Live Streaming (Every 3 seconds)
-```
-📶 STREAMING SENSOR DATA...
-
-🌡️  Living Room AC: 24°C, Power: 530W  ▶️
-💨  Bedroom Fan: Speed 3, Power: 35W   ▶️  
-🔊  Kitchen Speaker: Volume 45%, Power: 27W  ▶️
-
-⏸️ Press Enter to stop monitoring...
-```
-
-</details>
-
-<details>
-<summary><b>📲 Live Dashboard</b></summary>
-
-#### 📏 Real-time Monitoring Interface
-
-```
-┌──────────────────────────────────────────────┐
-│              📊 LIVE DASHBOARD               │
-├──────────────────────────────────────────────┤
-│                                              │
-│  🌡️  Living Room AC: 24°C, Power: 530W      │
-│  💨  Bedroom Fan: Speed 3, Power: 35W        │
-│  🔊  Kitchen Speaker: Volume 45%, Power: 27W │
-│                                              │
-│  🟢 Total Power: 592W  📈 Avg: 197W/device   │
-│                                              │
-│  ⏸️ Press Enter to stop monitoring...          │
-└──────────────────────────────────────────────┘
-```
-
-#### 🎨 Color Coding System
-- 🟢 **Green**: Success, Device ON, Connected
-- 🔴 **Red**: Error, Device OFF, Disconnected  
-- 🟡 **Yellow**: Warning, Processing
-- 🔵 **Blue**: Information, User prompts
-- 🟣 **Purple**: Data display, Readings
-
-</details>
-## 🧪 Testing
+Built with Java 21 and modern enterprise patterns for educational and demonstration purposes.
 
 ### 🏆 Test Excellence
 
