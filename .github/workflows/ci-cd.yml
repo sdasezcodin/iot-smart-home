@@ -73,4 +73,4 @@ jobs:
         with:
           name: sudipto-iot-smarthome-jar-v${{ steps.version.outputs.version }}
           path: target/iot-smarthome-dashboard-1.0-SNAPSHOT.jar
-          retention-days: 400
+          retention-days: 90
