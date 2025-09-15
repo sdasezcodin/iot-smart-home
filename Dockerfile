@@ -1,4 +1,4 @@
-# Multi-stage build for IoT Smart Home Dashboard
+# Multi-stage build for IoT Smart Home Dashboard.
 FROM maven:3.9.11-eclipse-temurin-21 AS build
 WORKDIR /app
 
