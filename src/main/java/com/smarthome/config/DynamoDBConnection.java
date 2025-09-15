@@ -40,7 +40,7 @@ public class DynamoDBConnection {
             try {
                 // Build the DynamoDB client with specific settings for a local instance.
                 dynamoDb = DynamoDbClient.builder()
-                        .endpointOverride(URI.create("host.docker.internal:8000")) // Points to the local DynamoDB instance.
+                        .endpointOverride(URI.create("http://localhost:8000")) // Points to the local DynamoDB instance.
                         .region(Region.AP_SOUTH_1) // A standard region for development.
                         .credentialsProvider(StaticCredentialsProvider.create(
                                 AwsBasicCredentials.create("dummy", "dummy") // Dummy credentials for local testing.
