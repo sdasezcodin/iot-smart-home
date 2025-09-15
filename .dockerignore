@@ -1,0 +1,36 @@
+# Version control
+.git
+.gitignore
+
+# IDE files
+.idea
+*.iml
+.vscode
+
+# Build artifacts (will be built inside container)
+target/
+*.jar
+*.war
+*.ear
+
+# Documentation
+*.md
+*.txt
+UML*.png
+
+# Test files
+**/test/resources/
+**/*Test.java
+**/*Tests.java
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# CI/CD files (not needed in container)
+.github/
