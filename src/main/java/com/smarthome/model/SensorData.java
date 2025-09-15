@@ -118,7 +118,7 @@ public class SensorData {
 
     // -------- Utility --------
     /**
-     * Returns a string representation of the SensorData object.
+     * Returns a string representation of the SensorData object
      * @return A formatted string displaying all properties of the reading.
      */
     @Override

@@ -227,7 +227,7 @@ public class Appliance implements Device, Subject {
 
     /**
      * Returns a string representation of the Appliance object, including all its properties.
-     * @return A formatted string with appliance details.
+     * @return A formatted string with appliance details
      */
     @Override
     public String toString() {

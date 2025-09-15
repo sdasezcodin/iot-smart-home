@@ -18,7 +18,7 @@ public interface ApplianceDAO<T> {
      * <p>
      * This method saves the provided entity object to the underlying data store.
      *
-     * @param entity The entity object to be saved. It should not be null.
+     * @param entity The entity objects to be saved. It should not be null.
      */
     void save(T entity);
 

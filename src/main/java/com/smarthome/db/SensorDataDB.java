@@ -158,7 +158,7 @@ public class SensorDataDB implements SensorDataDAO<SensorData> {
     }
 
     /**
-     * Retrieves the most recent readings across all devices using a scan.
+     * Retrieves the most recent readings across all devices using a scan
      * NOTE: This operation is inefficient on large tables. A Global Secondary Index
      * (GSI) would be needed for an optimized solution.
      * {@inheritDoc}

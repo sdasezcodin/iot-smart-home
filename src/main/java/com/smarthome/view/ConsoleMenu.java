@@ -342,7 +342,7 @@ public class ConsoleMenu {
     }
 
     /**
-     * Prompts the user for an integer input and handles invalid input.
+     * Prompts the user for an integer input and handles invalid input
      * @param prompt The message to display to the user.
      * @return The integer entered by the user, or -1 if the input is invalid.
      */

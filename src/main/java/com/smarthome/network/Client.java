@@ -113,7 +113,7 @@ public class Client {
      * Closes the socket connection and all associated streams.
      * This should be called to properly release network resources.
      *
-     * @throws NetworkException if there is a failure while closing the connection.
+     * @throws NetworkException if there is a failure while closing the connection
      */
     public void close() {
         try {

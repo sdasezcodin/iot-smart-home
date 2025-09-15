@@ -49,7 +49,7 @@ public interface SensorDataDAO<T> {
     List<T> findByDateRange(String start, String end);
 
     /**
-     * Retrieves the most recent readings across all devices.
+     * Retrieves the most recent readings across all devices
      * <p>
      * This operation fetches the latest readings from the entire collection of
      * sensor data, up to the specified limit.

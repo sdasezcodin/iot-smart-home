@@ -17,7 +17,7 @@ public class ConsoleColorsUtil {
     /** Underlines the text. */
     public static final String UNDERLINE = "\u001B[4m";
 
-    // Standard text color codes
+    // Standard text color codes.
     /** Sets the text color to red. */
     public static final String RED = "\u001B[31m";
     /** Sets the text color to green. */
