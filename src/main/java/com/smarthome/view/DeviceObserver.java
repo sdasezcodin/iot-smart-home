@@ -4,7 +4,7 @@ import com.smarthome.observer.Observer;
 import static com.smarthome.util.ConsoleColorsUtil.*;
 
 /**
- * An implementation of the {@link Observer} interface.
+ * An implementation of the {@link Observer} interface
  * <p>
  * This class acts as a simple display or a logger (a "dashboard") for
  * the smart home system. It subscribes to {@link com.smarthome.model.Appliance}

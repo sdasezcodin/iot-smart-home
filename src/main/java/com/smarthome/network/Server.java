@@ -115,7 +115,7 @@ public class Server {
             System.err.println(RED + "Server: Client disconnected: " + socket.getRemoteSocketAddress() + RESET);
         } finally {
             // The socket is already handled by try-with-resources, but an explicit close
-            // is a good practice if not using try-with-resources or for additional safety.
+            // is a good practice if not using try-with-resources or for additional safety
             try {
                 socket.close();
             } catch (Exception ignored) {}

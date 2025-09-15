@@ -36,7 +36,7 @@ public class ApplianceDB implements ApplianceDAO<Appliance> {
         DynamoDbClient client;
 
         try {
-            // Get the singleton instance of the DynamoDB client.
+            // Get the singleton instance of the DynamoDB client
             client = DynamoDBConnection.getInstance();
 
             // Build the enhanced client, which provides a higher-level, object-oriented interface.

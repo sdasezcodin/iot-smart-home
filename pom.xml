@@ -90,7 +90,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Shade Plugin to produce single runnable JAR -->
+            <!--- Shade Plugin to produce single runnable JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

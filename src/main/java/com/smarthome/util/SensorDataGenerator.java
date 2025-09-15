@@ -30,7 +30,7 @@ public class SensorDataGenerator {
     public static String generateMessage(String deviceName, String type, int level, double basePower) {
         double power;
 
-        // Calculate a base power value based on the device type and its level.
+        // Calculate a base power value based on the device type and its level
         switch (type.toUpperCase()) {
             case "AC":
                 // AC power usage is higher for lower temperatures (more cooling).
