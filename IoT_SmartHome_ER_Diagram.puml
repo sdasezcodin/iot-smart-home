@@ -1,0 +1,151 @@
+@startuml IoT_SmartHome_ER_Diagram
+
+!theme plain
+skinparam linetype ortho
+skinparam ranksep 100
+skinparam nodesep 50
+
+' Database Tables
+entity "DEVICE" as device {
+  * **id : String** <<PK>>
+  --
+  * type : String
+  * name : String  
+  * brand : String
+  * on : Boolean
+  * online : Boolean
+  * level : Integer
+  * powerUsage : Integer
+}
+
+entity "SENSOR_DATA" as sensor {
+  * **deviceId : String** <<PK,FK>>
+  * **id : String** <<SK>>
+  --
+  * date : String
+  * time : String
+  * data : String
+}
+
+' Application Layer Entities
+class "ApplianceFactory" as factory <<Abstract Factory>> {
+  + acBuilder() : Builder
+  + fanBuilder() : Builder
+  + speakerBuilder() : Builder
+}
+
+class "HaierFactory" as haier <<Concrete Factory>> {
+  + acBuilder() : Builder
+  + fanBuilder() : Builder
+  + speakerBuilder() : Builder
+}
+
+class "LGFactory" as lg <<Concrete Factory>> {
+  + acBuilder() : Builder
+  + fanBuilder() : Builder  
+  + speakerBuilder() : Builder
+}
+
+class "SonyFactory" as sony <<Concrete Factory>> {
+  + acBuilder() : Builder
+  + fanBuilder() : Builder
+  + speakerBuilder() : Builder
+}
+
+class "DeviceObserver" as observer <<Observer>> {
+  + update(message : String) : void
+}
+
+class "SmartHomeService" as service <<Service Layer>> {
+  - memoryDevices : Map<String, Appliance>
+  - streamingActive : AtomicBoolean
+  + registerDevice() : void
+  + toggleDevice() : void
+  + simulateDevice() : void
+  + startSensorStream() : void
+}
+
+class "ApplianceDAO" as appDAO <<DAO Interface>> {
+  + save(entity) : void
+  + update(entity) : void
+  + findById(id) : T
+  + findAll() : List<T>
+  + deleteById(id) : void
+}
+
+class "SensorDataDAO" as sensorDAO <<DAO Interface>> {
+  + save(reading) : void
+  + findByDeviceId(id, limit) : List<T>
+  + findByDateRange(start, end) : List<T>
+  + findRecent(limit) : List<T>
+}
+
+class "ApplianceDB" as appDB <<DAO Implementation>> {
+  - enhancedClient : DynamoDbEnhancedClient
+  - table : DynamoDbTable<Appliance>
+}
+
+class "SensorDataDB" as sensorDB <<DAO Implementation>> {
+  - enhancedClient : DynamoDbEnhancedClient
+  - table : DynamoDbTable<SensorData>
+}
+
+class "NetworkClient" as client <<Network Layer>> {
+  + sendConnect(name) : void
+  + sendDisconnect(name) : void
+  + sendSensorReading(data) : void
+}
+
+class "DynamoDBConnection" as dbconn <<Singleton>> {
+  - dynamoDb : DynamoDbClient
+  + getInstance() : DynamoDbClient
+  + closeConnection() : void
+}
+
+' Relationships
+
+' Database Relationships
+device ||--o{ sensor : "generates\n(1:N)"
+
+' Factory Pattern Relationships
+factory <|-- haier
+factory <|-- lg
+factory <|-- sony
+
+haier ..> device : "creates"
+lg ..> device : "creates"
+sony ..> device : "creates"
+
+' DAO Pattern Relationships
+appDAO <|.. appDB
+sensorDAO <|.. sensorDB
+
+appDB --> device : "manages"
+sensorDB --> sensor : "manages"
+
+' Service Layer Relationships
+service --> appDAO : "uses"
+service --> sensorDAO : "uses"
+service --> client : "uses"
+service --> observer : "notifies"
+
+' Observer Pattern
+device ..> observer : "notifies\n(M:N)"
+
+' Database Connection
+appDB --> dbconn : "uses"
+sensorDB --> dbconn : "uses"
+
+' Additional Notes
+note top of device : "DynamoDB Table: Device\nPartition Key: id"
+note top of sensor : "DynamoDB Table: SensorData\nComposite Key: deviceId (PK) + id (SK)\nTime-series data for efficient queries"
+
+note right of factory : "Abstract Factory Pattern\nCreates different appliance types\nwith brand-specific configurations"
+
+note left of observer : "Observer Pattern\nReceives real-time notifications\nwhen device state changes"
+
+note bottom of service : "Central orchestrator managing:\n- Device lifecycle\n- Sensor data streaming\n- Network communication\n- Database operations"
+
+note bottom of dbconn : "Singleton Pattern\nManages single DynamoDB\nclient instance"
+
+@enduml
