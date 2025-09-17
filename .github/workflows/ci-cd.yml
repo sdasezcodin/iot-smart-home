@@ -73,10 +73,10 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag iot-smarthome-dashboard:latest ghcr.io/${{ github.repository_owner }}/iot-smarthome-dashboard:latest
-          docker tag iot-smarthome-dashboard:latest ghcr.io/${{ github.repository_owner }}/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
+          docker tag iot-smarthome-dashboard:latest ghcr.io/sdasezcodin/iot-smarthome-dashboard:latest
+          docker tag iot-smarthome-dashboard:latest ghcr.io/sdasezcodin/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
 
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/iot-smarthome-dashboard:latest
-          docker push ghcr.io/${{ github.repository_owner }}/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
+          docker push ghcr.io/sdasezcodin/iot-smarthome-dashboard:latest
+          docker push ghcr.io/sdasezcodin/iot-smarthome-dashboard:v${{ steps.version.outputs.version }}
