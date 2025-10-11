@@ -49,6 +49,16 @@ public class SensorData {
     // -------- DynamoDB mapping Getters and Setters --------
 
     /**
+     * Retrieves the unique identifier of the device that generated the reading.
+     * This field serves as the DynamoDB Partition Key, grouping all readings
+     * from the same device together for fast lookups.
+     * @return The device ID.
+     */
+    @DynamoDbPartitionKey // <-- ADDED THIS ANNOTATION
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
+
+    /**
      * Retrieves the unique identifier for the sensor reading.
      * This field serves as the DynamoDB Sort Key, allowing readings
      * to be sorted chronologically for efficient range queries.
@@ -57,16 +67,6 @@ public class SensorData {
     @DynamoDbSortKey
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
-
-    /**
-     * Retrieves the unique identifier of the device that generated the reading.
-     * This field serves as the DynamoDB Partition Key, grouping all readings
-     * from the same device together for fast lookups.
-     * @return The device ID.
-     */
-    @DynamoDbPartitionKey
-    public String getDeviceId() { return deviceId; }
-    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
     /**
      * Retrieves the date of the sensor reading in "YYYY-MM-DD" format.

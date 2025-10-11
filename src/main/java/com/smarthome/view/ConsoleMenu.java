@@ -255,7 +255,19 @@ public class ConsoleMenu {
                             CYAN + " [2] By Date Range " + RESET + YELLOW + "- See readings over time" + RESET + "\n" +
                             CYAN + " [0] Back " + RESET + YELLOW + "- Return to main menu" + RESET
             );
-            int choice = readIntInput(BOLD + BLUE + "Enter your choice: " + RESET);
+
+            System.out.print(BOLD + BLUE + "Enter your choice: " + RESET);
+            String choiceInput = scanner.nextLine().trim(); // Use nextLine().trim() to clear buffer
+            int choice;
+            try {
+                choice = Integer.parseInt(choiceInput);
+            } catch (NumberFormatException e) {
+                System.out.println(RED + "⚠️ Invalid input, please enter a number." + RESET);
+                sleep(1000);
+                continue; // Skip switch and loop again
+            }
+            // --- END OF FIX ---
+
             switch (choice) {
                 case 1 -> {
                     System.out.print("Device ID: ");
@@ -266,10 +278,11 @@ public class ConsoleMenu {
                     sleep(500);
                 }
                 case 2 -> {
-                    System.out.print("Start date (yyyy-MM-dd): ");
+                    System.out.print("Start date (YYYY-MM-DD): ");
                     String start = scanner.nextLine().trim();
-                    System.out.print("End date (yyyy-MM-dd): ");
+                    System.out.print("End date (YYYY-MM-DD): ");
                     String end = scanner.nextLine().trim();
+
                     controller.showReadingsByDateRange(start, end);
                     sleep(500);
                 }

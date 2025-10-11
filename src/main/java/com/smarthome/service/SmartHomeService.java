@@ -279,8 +279,11 @@ public class SmartHomeService {
      * @throws DatabaseException if a database error occurs.
      */
     public List<SensorData> getReadingsByDevice(String deviceId, String limitInput) throws UserException, DatabaseException {
+
         InputValidator.validateSensorDataFetchLimit(limitInput);
+
         int limit = Integer.parseInt(limitInput.trim());
+
         return readingDAO.findByDeviceId(deviceId, limit);
     }
 
@@ -354,65 +357,64 @@ public class SmartHomeService {
         streamingActive.set(true);
 
         streamThread = new Thread(() -> {
-            int counter = 0;
 
             // The main streaming loop, controlled by the atomic flag.
             while (streamingActive.get()) {
-                // Loop through all in-memory devices.
+
+                // Iterate through all in-memory devices.
                 for (Appliance appliance : memoryDevices.values()) {
                     // Check the flag again to allow for an immediate stop.
                     if (!streamingActive.get()) break;
-                    // Skip devices that are offline or turned off.
-                    if (!appliance.isOnline() || !appliance.isOn()) continue;
 
-                    counter++;
-
-                    // Save a snapshot of all active devices to the DB every ~10th reading.
-                    if (counter % 33 == 0) {
-                        for (Appliance saveAppliance : memoryDevices.values()) {
-                            if (!saveAppliance.isOnline() || !saveAppliance.isOn()) continue;
-
-                            String saveReadingMsg = SensorDataGenerator.generateMessage(
-                                    saveAppliance.getName(),
-                                    saveAppliance.getType(),
-                                    saveAppliance.getLevel(),
-                                    saveAppliance.getPowerUsage()
-                            );
-
-                            SensorData sensorData = new SensorData.Builder()
-                                    .id(IdGenerator.generateReadingDataID())
-                                    .deviceId(saveAppliance.getId())
-                                    .date(DateTimeUtil.getCurrentDate())
-                                    .time(DateTimeUtil.getCurrentTime())
-                                    .data(saveReadingMsg)
-                                    .build();
-
-                            try {
-                                readingDAO.save(sensorData);
-                            } catch (Exception e) {
-                                System.err.println("⚠️ Failed to save sensor data: " + e.getMessage());
-                            }
-                        }
+                    // Only process devices that are ON.
+                    if (!appliance.isOn()) {
+                        continue;
                     }
-
-                    // Send the current appliance's reading to the network client.
-                    String readingMsg = SensorDataGenerator.generateMessage(
-                            appliance.getName(),
-                            appliance.getType(),
-                            appliance.getLevel(),
-                            appliance.getPowerUsage()
-                    );
-                    networkClient.sendSensorReading(readingMsg);
 
                     try {
-                        // Pause the thread for 3 seconds before processing the next appliance.
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        // If interrupted, restore the flag and break out of the loop.
-                        Thread.currentThread().interrupt();
-                        streamingActive.set(false);
-                        break;
+                        // --- 1. DATABASE SAVE (Snapshot for this device) ---
+                        String saveReadingMsg = SensorDataGenerator.generateMessage(
+                                appliance.getName(),
+                                appliance.getType(),
+                                appliance.getLevel(),
+                                appliance.getPowerUsage()
+                        );
+
+                        SensorData sensorData = new SensorData.Builder()
+                                .id(IdGenerator.generateReadingDataID())
+                                .deviceId(appliance.getId())
+                                .date(DateTimeUtil.getCurrentDate())
+                                .time(DateTimeUtil.getCurrentTime())
+                                .data(saveReadingMsg)
+                                .build();
+
+                        readingDAO.save(sensorData);
+
+                        // --- 2. NETWORK SEND (Real-time reading for this device) ---
+                        // Only send data over the network if the device is ONLINE.
+                        if (appliance.isOnline()) {
+                            String readingMsg = SensorDataGenerator.generateMessage(
+                                    appliance.getName(),
+                                    appliance.getType(),
+                                    appliance.getLevel(),
+                                    appliance.getPowerUsage()
+                            );
+                            networkClient.sendSensorReading(readingMsg);
+                        }
+                    } catch (Exception ignored) {
+                        // Ignore individual device processing failures to ensure the stream continues.
                     }
+
+                }
+
+                // Wait 9 seconds before starting the next full cycle of devices.
+                try {
+                    Thread.sleep(9000);
+                } catch (InterruptedException e) {
+                    // If interrupted, restore the flag and break out of the loop.
+                    Thread.currentThread().interrupt();
+                    streamingActive.set(false);
+                    break;
                 }
             }
         }, "SensorStreamThread");
